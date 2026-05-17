@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { useTranslations, getLocalizedPath } from '../../i18n/translations';
+
+const lang = 'en';
+const t = useTranslations(lang);
+
+const categories = [
+  { key: 'ramos',   emoji: '💐', description: 'Bouquets to give or decorate, made with seasonal flowers.' },
+  { key: 'centros', emoji: '🌺', description: 'Table centrepieces for home, offices and celebrations.' },
+  { key: 'bodas',   emoji: '🤍', description: 'Bridal bouquets, floral decoration and arrangements for your special day.' },
+  { key: 'plantas', emoji: '🪴', description: 'Indoor and outdoor plants, pots and vertical gardens.' },
+  { key: 'coronas', emoji: '🌿', description: 'Funeral wreaths and arrangements made with respect and care.' },
+  { key: 'eventos', emoji: '✨', description: 'Floral decoration for events, communions, birthdays and more.' },
+] as const;
+---
+
+<Layout title={t('nav.catalog')}>
+
+  <section class="max-w-6xl mx-auto px-6 py-20">
+    <h1 class="text-4xl font-light text-center text-[#1a1a1a] mb-2">{t('catalog.title')}</h1>
+    <p class="text-center text-stone-400 mb-16">{t('catalog.subtitle')}</p>
+
+    <div class="space-y-20">
+      {categories.map(({ key, emoji, description }) => (
+        <div id={key} class="scroll-mt-24">
+          <div class="flex items-center gap-3 mb-8">
+            <span class="text-3xl">{emoji}</span>
+            <h2 class="text-2xl font-light text-[#1a1a1a]">{t(`catalog.${key}`)}</h2>
+          </div>
+          <p class="text-stone-500 mb-8 max-w-xl">{description}</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {[1,2,3,4].map(() => (
+              <div class="aspect-square bg-stone-100 rounded-xl flex items-center justify-center text-stone-300 text-sm">
+                📷
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-[#2d5a3d] text-white py-20 text-center">
+    <h2 class="text-3xl font-light mb-4">{t('catalog.cta')}</h2>
+    <p class="text-green-200 mb-8">{t('catalog.cta.sub')}</p>
+    <a href={getLocalizedPath('/contacto', lang)} class="inline-block bg-white text-[#2d5a3d] px-8 py-3 rounded-full text-sm font-medium hover:bg-green-50 transition-colors">
+      {t('nav.contact')}
+    </a>
+  </section>
+
+</Layout>

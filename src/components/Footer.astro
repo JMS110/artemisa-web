@@ -1,0 +1,49 @@
+---
+import { useTranslations, type Lang } from '../i18n/translations';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<footer class="bg-[#2d5a3d] text-white mt-24">
+  <div class="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+
+    <div>
+      <div class="flex items-center gap-2 mb-4">
+        <span class="text-2xl">🌸</span>
+        <span class="font-semibold text-lg">Floristería Artemisa</span>
+      </div>
+      <p class="text-green-200 text-sm leading-relaxed">
+        C/ Zoa, 55 (esq. Antonio Machado)<br />
+        03180 Torrevieja, Alicante
+      </p>
+    </div>
+
+    <div>
+      <h3 class="font-semibold mb-3 text-green-100">{t('contact.hours')}</h3>
+      <p class="text-green-200 text-sm leading-relaxed">
+        Lun – Vie: 10:00 – 13:30 / 17:00 – 20:00<br />
+        Sáb: 10:00 – 13:30<br />
+        Verano (tardes): hasta las 20:30<br />
+        Dom: Cerrado
+      </p>
+    </div>
+
+    <div>
+      <h3 class="font-semibold mb-3 text-green-100">{t('contact.title')}</h3>
+      <ul class="text-green-200 text-sm space-y-1">
+        <li>📞 965 711 243</li>
+        <li>📱 633 501 113</li>
+        <li>📍 C/ Zoa, 55 – Torrevieja</li>
+      </ul>
+    </div>
+
+  </div>
+  <div class="border-t border-green-700 text-center py-4 text-green-400 text-xs">
+    © {new Date().getFullYear()} Floristería Artemisa — {t('footer.rights')}
+  </div>
+</footer>

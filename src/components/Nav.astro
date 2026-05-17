@@ -1,0 +1,67 @@
+---
+import { useTranslations, languages, getLocalizedPath, type Lang } from '../i18n/translations';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-stone-100">
+  <nav class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+
+    <a href={getLocalizedPath('/', lang)} class="flex items-center gap-2">
+      <span class="text-2xl">🌸</span>
+      <span class="font-semibold text-lg text-[#2d5a3d] tracking-tight">Artemisa</span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-8">
+      <a href={getLocalizedPath('/', lang)} class="text-sm text-stone-600 hover:text-[#2d5a3d] transition-colors">
+        {t('nav.home')}
+      </a>
+      <a href={getLocalizedPath('/catalogo', lang)} class="text-sm text-stone-600 hover:text-[#2d5a3d] transition-colors">
+        {t('nav.catalog')}
+      </a>
+      <a href={getLocalizedPath('/contacto', lang)} class="text-sm text-stone-600 hover:text-[#2d5a3d] transition-colors">
+        {t('nav.contact')}
+      </a>
+    </div>
+
+    <div class="flex items-center gap-2">
+      {Object.entries(languages).map(([code, label]) => (
+        <a
+          href={code === 'es' ? currentPath.replace(/^\/(en|de|ru)/, '') : currentPath.replace(/^\/(en|de|ru|)/, `/${code}`)}
+          class={`text-xs px-2 py-1 rounded transition-colors ${lang === code ? 'bg-[#2d5a3d] text-white' : 'text-stone-400 hover:text-[#2d5a3d]'}`}
+        >
+          {code.toUpperCase()}
+        </a>
+      ))}
+    </div>
+
+    <!-- Mobile menu button -->
+    <button id="menu-btn" class="md:hidden text-stone-600" aria-label="Menú">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-stone-100 bg-white">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-4">
+      <a href={getLocalizedPath('/', lang)} class="text-sm text-stone-600">{t('nav.home')}</a>
+      <a href={getLocalizedPath('/catalogo', lang)} class="text-sm text-stone-600">{t('nav.catalog')}</a>
+      <a href={getLocalizedPath('/contacto', lang)} class="text-sm text-stone-600">{t('nav.contact')}</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+</script>

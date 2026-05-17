@@ -1,0 +1,92 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { useTranslations } from '../i18n/translations';
+
+const lang = 'es';
+const t = useTranslations(lang);
+---
+
+<Layout title={t('contact.title')}>
+
+  <section class="max-w-5xl mx-auto px-6 py-20">
+    <h1 class="text-4xl font-light text-center text-[#1a1a1a] mb-2">{t('contact.title')}</h1>
+    <p class="text-center text-stone-400 mb-16">{t('contact.subtitle')}</p>
+
+    <div class="grid md:grid-cols-2 gap-12">
+
+      <!-- Info -->
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-[#2d5a3d] mb-2">{t('contact.phone')}</h3>
+          <p class="text-stone-700">965 711 243<br />633 501 113</p>
+        </div>
+        <div>
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-[#2d5a3d] mb-2">{t('contact.address')}</h3>
+          <p class="text-stone-700">C/ Zoa, 55 (esq. C/ Antonio Machado)<br />03180 Torrevieja, Alicante</p>
+        </div>
+        <div>
+          <h3 class="text-xs font-semibold uppercase tracking-widest text-[#2d5a3d] mb-2">{t('contact.hours')}</h3>
+          <p class="text-stone-700 leading-relaxed">
+            Lun – Vie: 10:00 – 13:30 / 17:00 – 20:00<br />
+            Sáb: 10:00 – 13:30<br />
+            Verano (tardes): hasta las 20:30<br />
+            Dom: Cerrado
+          </p>
+        </div>
+        <!-- Map placeholder -->
+        <div class="aspect-video bg-stone-100 rounded-2xl flex items-center justify-center text-stone-300 text-sm">
+          Mapa próximamente
+        </div>
+      </div>
+
+      <!-- Form -->
+      <form
+        method="POST"
+        action="https://formspree.io/f/XXXXXXXX"
+        class="space-y-5"
+      >
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-widest text-stone-500 mb-1.5">
+            {t('contact.name')}
+          </label>
+          <input
+            type="text"
+            name="name"
+            required
+            class="w-full border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#2d5a3d]/30 bg-white"
+          />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-widest text-stone-500 mb-1.5">
+            {t('contact.email')}
+          </label>
+          <input
+            type="email"
+            name="email"
+            required
+            class="w-full border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#2d5a3d]/30 bg-white"
+          />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-widest text-stone-500 mb-1.5">
+            {t('contact.message')}
+          </label>
+          <textarea
+            name="message"
+            rows="5"
+            required
+            class="w-full border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#2d5a3d]/30 bg-white resize-none"
+          ></textarea>
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-[#2d5a3d] text-white py-3 rounded-full text-sm font-medium hover:bg-[#1e3f2a] transition-colors"
+        >
+          {t('contact.send')}
+        </button>
+      </form>
+
+    </div>
+  </section>
+
+</Layout>
