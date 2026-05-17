@@ -6,12 +6,36 @@ const lang = 'es';
 const t = useTranslations(lang);
 
 const categories = [
-  { key: 'ramos',   emoji: '💐', description: 'Ramos para regalar o decorar, elaborados con flores de temporada.' },
-  { key: 'centros', emoji: '🌺', description: 'Centros de mesa para el hogar, oficinas y celebraciones.' },
-  { key: 'bodas',   emoji: '🤍', description: 'Ramos de novia, decoración floral y arreglos para tu día especial.' },
-  { key: 'plantas', emoji: '🪴', description: 'Plantas de interior y exterior, macetas y jardines verticales.' },
-  { key: 'coronas', emoji: '🌿', description: 'Coronas y arreglos fúnebres elaborados con respeto y cuidado.' },
-  { key: 'eventos', emoji: '✨', description: 'Decoración floral para eventos, comuniones, cumpleaños y más.' },
+  {
+    key: 'ramos', emoji: '💐', description: 'Ramos para regalar o decorar, elaborados con flores de temporada.',
+    images: [
+      '/images/ramos/IMG_8175.jpg',
+      '/images/ramos/IMG_0841.jpg',
+      '/images/ramos/IMG_4487.jpg',
+      '/images/ramos/IMG_4996.jpg',
+      '/images/ramos/IMG_6544.jpg',
+      '/images/ramos/IMG_8019.jpg',
+      '/images/ramos/IMG_9432.jpg',
+      '/images/ramos/BC8E75B2-46D3-4320-8861-D748987B9ED8.jpg',
+      '/images/ramos/e0657dc0-9215-4bff-a7ed-9fc002e349b4.jpg',
+    ],
+  },
+  {
+    key: 'centros', emoji: '🌺', description: 'Centros de mesa para el hogar, oficinas y celebraciones.',
+    images: [
+      '/images/centros/IMG_7794.jpg',
+      '/images/centros/IMG_8114.jpg',
+      '/images/centros/IMG_8113.jpg',
+      '/images/centros/IMG_7481.jpg',
+      '/images/centros/IMG_0794.jpg',
+      '/images/centros/00A3EF83-0CE2-4776-AB30-192961C6466A.jpg',
+      '/images/centros/5BC19434-D615-48C8-9563-45F9C6D86CB9.jpg',
+    ],
+  },
+  { key: 'bodas',   emoji: '🤍', description: 'Ramos de novia, decoración floral y arreglos para tu día especial.', images: [] },
+  { key: 'plantas', emoji: '🪴', description: 'Plantas de interior y exterior, macetas y jardines verticales.', images: [] },
+  { key: 'coronas', emoji: '🌿', description: 'Coronas y arreglos fúnebres elaborados con respeto y cuidado.', images: [] },
+  { key: 'eventos', emoji: '✨', description: 'Decoración floral para eventos, comuniones, cumpleaños y más.', images: [] },
 ] as const;
 ---
 
@@ -22,20 +46,26 @@ const categories = [
     <p class="text-center text-stone-400 mb-16">{t('catalog.subtitle')}</p>
 
     <div class="space-y-20">
-      {categories.map(({ key, emoji, description }) => (
+      {categories.map(({ key, emoji, description, images }) => (
         <div id={key} class="scroll-mt-24">
           <div class="flex items-center gap-3 mb-8">
             <span class="text-3xl">{emoji}</span>
             <h2 class="text-2xl font-light text-[#1a1a1a]">{t(`catalog.${key}`)}</h2>
           </div>
           <p class="text-stone-500 mb-8 max-w-xl">{description}</p>
-          <!-- Photo grid — las fotos las añadirá Rebeca -->
           <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {[1,2,3,4].map(() => (
-              <div class="aspect-square bg-stone-100 rounded-xl flex items-center justify-center text-stone-300 text-sm">
-                📷
-              </div>
-            ))}
+            {images.length > 0
+              ? images.map((src) => (
+                  <div class="aspect-square overflow-hidden rounded-xl bg-stone-100">
+                    <img src={src} alt="" class="w-full h-full object-cover" loading="lazy" />
+                  </div>
+                ))
+              : [1,2,3,4].map(() => (
+                  <div class="aspect-square bg-stone-100 rounded-xl flex items-center justify-center text-stone-300 text-sm">
+                    📷
+                  </div>
+                ))
+            }
           </div>
         </div>
       ))}
