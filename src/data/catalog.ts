@@ -1,0 +1,40 @@
+export const catalogImages = {
+  ramos: [
+    '/images/ramos/IMG_8175.jpg',
+    '/images/ramos/IMG_0841.jpg',
+    '/images/ramos/IMG_4487.jpg',
+    '/images/ramos/IMG_4996.jpg',
+    '/images/ramos/IMG_6544.jpg',
+    '/images/ramos/IMG_8019.jpg',
+    '/images/ramos/IMG_9432.jpg',
+    '/images/ramos/BC8E75B2-46D3-4320-8861-D748987B9ED8.jpg',
+    '/images/ramos/e0657dc0-9215-4bff-a7ed-9fc002e349b4.jpg',
+    '/images/ramos/236C4CD7-6B4D-47DE-AF48-1E9B39FF5A59.JPG',
+  ],
+  centros: [
+    '/images/centros/IMG_7794.jpg',
+    '/images/centros/IMG_8113.jpg',
+    '/images/centros/IMG_7481.jpg',
+    '/images/centros/IMG_0794.jpg',
+    '/images/centros/00A3EF83-0CE2-4776-AB30-192961C6466A.jpg',
+    '/images/centros/5BC19434-D615-48C8-9563-45F9C6D86CB9.jpg',
+  ],
+  bodas: [] as string[],
+  plantas: [] as string[],
+  coronas: [] as string[],
+  florseca: [] as string[],
+  eventos: [
+    '/images/eventos/1CB0E303-A390-4B12-86F6-27268E5DCB6F.JPG',
+    '/images/eventos/1CC6A918-93ED-4A48-A4CE-3D46FB8A9F5D.JPG',
+    '/images/eventos/24C93A09-31AF-4032-9633-9CE75DC75384.JPG',
+    '/images/eventos/2E706CCD-0764-4628-8E60-08B6A17F1F5A.JPG',
+    '/images/eventos/70B773E4-0425-4FAB-998A-D5AAD6D4BF57.JPG',
+    '/images/eventos/7DB1B8F4-0966-423D-8031-FAFACAE3A1C1.JPG',
+    '/images/eventos/A85C4C8C-90CB-4CA5-86C3-077D16EED88D.JPG',
+    '/images/eventos/B9AAEA4C-7DC2-4294-96E5-E78427582B7D.JPG',
+    '/images/eventos/F080D13A-2482-4350-A964-9D8BF3BAACA4.JPG',
+    '/images/eventos/F7BE53E4-89F4-4571-A9E1-B1E3F079804B.JPG',
+  ],
+} as const;
+
+export type CategoryKey = keyof typeof catalogImages;

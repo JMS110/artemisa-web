@@ -1,56 +1,21 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { useTranslations, getLocalizedPath } from '../i18n/translations';
+import { catalogImages } from '../data/catalog';
 
 const lang = 'es';
 const t = useTranslations(lang);
 
+const PREVIEW_COUNT = 7;
+
 const categories = [
-  {
-    key: 'ramos', emoji: '💐', description: 'Ramos para regalar o decorar, elaborados con flores de temporada.',
-    images: [
-      '/images/ramos/IMG_8175.jpg',
-      '/images/ramos/IMG_0841.jpg',
-      '/images/ramos/IMG_4487.jpg',
-      '/images/ramos/IMG_4996.jpg',
-      '/images/ramos/IMG_6544.jpg',
-      '/images/ramos/IMG_8019.jpg',
-      '/images/ramos/IMG_9432.jpg',
-      '/images/ramos/BC8E75B2-46D3-4320-8861-D748987B9ED8.jpg',
-      '/images/ramos/e0657dc0-9215-4bff-a7ed-9fc002e349b4.jpg',
-      '/images/ramos/236C4CD7-6B4D-47DE-AF48-1E9B39FF5A59.JPG',
-    ],
-  },
-  {
-    key: 'centros', emoji: '🌺', description: 'Centros de mesa para el hogar, oficinas y celebraciones.',
-    images: [
-      '/images/centros/IMG_7794.jpg',
-      '/images/centros/IMG_8114.jpg',
-      '/images/centros/IMG_8113.jpg',
-      '/images/centros/IMG_7481.jpg',
-      '/images/centros/IMG_0794.jpg',
-      '/images/centros/00A3EF83-0CE2-4776-AB30-192961C6466A.jpg',
-      '/images/centros/5BC19434-D615-48C8-9563-45F9C6D86CB9.jpg',
-    ],
-  },
-  { key: 'bodas',   emoji: '🤍', description: 'Ramos de novia, decoración floral y arreglos para tu día especial.', images: [] },
-  { key: 'plantas', emoji: '🪴', description: 'Plantas de interior y exterior, macetas y jardines verticales.', images: [] },
-  { key: 'coronas', emoji: '🌿', description: 'Coronas y arreglos fúnebres elaborados con respeto y cuidado.', images: [] },
-  {
-    key: 'eventos', emoji: '✨', description: 'Decoración floral para eventos, comuniones, cumpleaños y más.',
-    images: [
-      '/images/eventos/1CB0E303-A390-4B12-86F6-27268E5DCB6F.JPG',
-      '/images/eventos/1CC6A918-93ED-4A48-A4CE-3D46FB8A9F5D.JPG',
-      '/images/eventos/24C93A09-31AF-4032-9633-9CE75DC75384.JPG',
-      '/images/eventos/2E706CCD-0764-4628-8E60-08B6A17F1F5A.JPG',
-      '/images/eventos/70B773E4-0425-4FAB-998A-D5AAD6D4BF57.JPG',
-      '/images/eventos/7DB1B8F4-0966-423D-8031-FAFACAE3A1C1.JPG',
-      '/images/eventos/A85C4C8C-90CB-4CA5-86C3-077D16EED88D.JPG',
-      '/images/eventos/B9AAEA4C-7DC2-4294-96E5-E78427582B7D.JPG',
-      '/images/eventos/F080D13A-2482-4350-A964-9D8BF3BAACA4.JPG',
-      '/images/eventos/F7BE53E4-89F4-4571-A9E1-B1E3F079804B.JPG',
-    ],
-  },
+  { key: 'ramos',   emoji: '💐', description: 'Ramos para regalar o decorar, elaborados con flores de temporada.' },
+  { key: 'centros', emoji: '🌺', description: 'Centros de mesa para el hogar, oficinas y celebraciones.' },
+  { key: 'bodas',   emoji: '🤍', description: 'Ramos de novia, decoración floral y arreglos para tu día especial.' },
+  { key: 'plantas', emoji: '🪴', description: 'Plantas de interior y exterior, macetas y cuidados.' },
+  { key: 'coronas', emoji: '🌿', description: 'Composiciones fúnebres elaboradas con respeto y cuidado para los momentos más difíciles.' },
+  { key: 'florseca', emoji: '🌾', description: 'Ramos, centros y decoración con flor seca y preservada, con una belleza que dura para siempre.' },
+  { key: 'eventos', emoji: '✨', description: 'Decoración floral para eventos, comuniones, cumpleaños y más.' },
 ] as const;
 ---
 
@@ -61,29 +26,48 @@ const categories = [
     <p class="text-center text-stone-400 mb-16">{t('catalog.subtitle')}</p>
 
     <div class="space-y-20">
-      {categories.map(({ key, emoji, description, images }) => (
-        <div id={key} class="scroll-mt-24">
-          <div class="flex items-center gap-3 mb-8">
-            <span class="text-3xl">{emoji}</span>
-            <h2 class="text-2xl font-light text-[#1a1a1a]">{t(`catalog.${key}`)}</h2>
+      {categories.map(({ key, emoji, description }) => {
+        const images = catalogImages[key] as readonly string[];
+        const preview = images.slice(0, PREVIEW_COUNT);
+        const hasMore = images.length > PREVIEW_COUNT;
+
+        return (
+          <div id={key} class="scroll-mt-24">
+            <div class="flex items-center gap-3 mb-8">
+              <span class="text-3xl">{emoji}</span>
+              <h2 class="text-2xl font-light text-[#1a1a1a]">{t(`catalog.${key}`)}</h2>
+            </div>
+            <p class="text-stone-500 mb-8 max-w-xl">{description}</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {preview.length > 0
+                ? (
+                  <>
+                    {preview.map((src) => (
+                      <div class="aspect-square overflow-hidden rounded-xl bg-stone-100">
+                        <img src={src} alt="" class="w-full h-full object-cover" loading="lazy" />
+                      </div>
+                    ))}
+                    {hasMore && (
+                      <a
+                        href={`/catalogo/${key}`}
+                        class="aspect-square rounded-xl bg-[#2d5a3d] flex flex-col items-center justify-center text-white gap-2 hover:bg-[#1e3f2a] transition-colors"
+                      >
+                        <span class="text-2xl">→</span>
+                        <span class="text-sm font-medium tracking-wide">Ver más</span>
+                      </a>
+                    )}
+                  </>
+                )
+                : [1,2,3,4].map(() => (
+                    <div class="aspect-square bg-stone-100 rounded-xl flex items-center justify-center text-stone-300 text-sm">
+                      📷
+                    </div>
+                  ))
+              }
+            </div>
           </div>
-          <p class="text-stone-500 mb-8 max-w-xl">{description}</p>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {images.length > 0
-              ? images.map((src) => (
-                  <div class="aspect-square overflow-hidden rounded-xl bg-stone-100">
-                    <img src={src} alt="" class="w-full h-full object-cover" loading="lazy" />
-                  </div>
-                ))
-              : [1,2,3,4].map(() => (
-                  <div class="aspect-square bg-stone-100 rounded-xl flex items-center justify-center text-stone-300 text-sm">
-                    📷
-                  </div>
-                ))
-            }
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   </section>
 
