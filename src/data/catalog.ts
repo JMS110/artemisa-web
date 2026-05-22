@@ -17,7 +17,6 @@ export const catalogImages = {
     '/images/centros/IMG_7481.jpg',
     '/images/centros/IMG_0794.jpg',
     '/images/centros/IMG_4070.jpg',
-    '/images/centros/IMG_4091.PNG',
     '/images/centros/00A3EF83-0CE2-4776-AB30-192961C6466A.JPG',
     '/images/centros/5BC19434-D615-48C8-9563-45F9C6D86CB9.JPG',
   ],

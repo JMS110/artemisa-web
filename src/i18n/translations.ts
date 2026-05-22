@@ -34,6 +34,7 @@ export const ui = {
     'contact.address': 'Dirección',
     'contact.hours': 'Horario',
     'footer.rights': 'Todos los derechos reservados',
+    'delivery': '🚚 Reparto a domicilio en Torrevieja y alrededores',
   },
   en: {
     'nav.home': 'Home',
@@ -63,6 +64,7 @@ export const ui = {
     'contact.address': 'Address',
     'contact.hours': 'Opening hours',
     'footer.rights': 'All rights reserved',
+    'delivery': '🚚 Home delivery in Torrevieja and surroundings',
   },
 } as const;
 
