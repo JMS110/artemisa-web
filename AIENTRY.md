@@ -4,7 +4,7 @@ Web comercial de **Floristería Artemisa** (Torrevieja), empresa de Rebeca (espo
 
 ## Stack
 
-- **Astro 6** + **TailwindCSS 4** + i18n ES/EN
+- **Astro 7** + **TailwindCSS 4** + i18n ES/EN
 - Repo: `JMS110/artemisa-web` (GitHub)
 - Deploy: **Vercel Hobby** con auto-deploy en push a `main`
 - DNS DonDominio → Vercel
@@ -20,6 +20,8 @@ Web comercial de **Floristería Artemisa** (Torrevieja), empresa de Rebeca (espo
 Fotos originales viven en el NAS (`/volume1/Web-Artemisa/<categoria>/`). Al ejecutar `./scripts/publicar-artemisa.sh` desde el Mac: descarga → optimiza WebP 1920px → copia al repo → commit + push → Vercel despliega.
 
 Categorías: `ramos, centros, bodas, plantas, coronas, flor-seca, eventos`.
+
+Desde 2026-09-20, las 69 fotos históricas y la primera subida desde el iPhone están archivadas en `_procesadas/`; el repo contiene 70 WebP optimizados (unos 21 MB). UGREENOS bloquea `rsync` remoto sobre `/volume1`, por lo que el script transfiere mediante `tar` sobre SSH.
 
 ## Fuentes de verdad (leer antes de trabajar)
 

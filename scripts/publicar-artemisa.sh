@@ -50,10 +50,11 @@ done
 # ============================================================================
 # PRECHECKS
 # ============================================================================
-for cmd in sips cwebp rsync ssh git; do
+for cmd in sips cwebp file tar ssh git; do
   command -v "$cmd" >/dev/null || { echo "ERROR: falta $cmd"; exit 1; }
 done
 [ -d "$REPO_DIR/.git" ] || { echo "ERROR: no es un repo git: $REPO_DIR"; exit 1; }
+ssh "$NAS_HOST" "command -v tar >/dev/null" || { echo "ERROR: falta tar en $NAS_HOST"; exit 1; }
 
 # ============================================================================
 # 1. DESCARGAR FOTOS PENDIENTES DEL NAS
@@ -61,8 +62,13 @@ done
 echo "▶ Descargando fotos del NAS ($NAS_HOST:$NAS_SRC)..."
 for cat in "${CATEGORIAS[@]}"; do
   mkdir -p "$TMP_DIR/$cat"
-  # -q silencioso; solo bajamos categorías (no _procesadas)
-  rsync -a --quiet "$NAS_HOST:$NAS_SRC/$cat/" "$TMP_DIR/$cat/" 2>/dev/null || true
+  # UGREENOS bloquea rsync remoto sobre /volume1; tar por SSH respeta sus ACL.
+  # Solo bajamos categorías (no _procesadas) y propagamos cualquier error real.
+  if ! LC_ALL=C ssh "$NAS_HOST" "test -d '$NAS_SRC/$cat' && LC_ALL=C tar -C '$NAS_SRC/$cat' -cf - ." \
+    | LC_ALL=C tar -C "$TMP_DIR/$cat" -xf -; then
+    echo "ERROR: no se pudo descargar $cat desde el NAS"
+    exit 1
+  fi
 done
 
 # ============================================================================
@@ -113,20 +119,26 @@ for cat in "${CATEGORIAS[@]}"; do
       input_for_sips="$intermediate"
     fi
 
-    # Paso 2: resize (mantiene aspecto, solo si ancho > MAX_WIDTH)
+    # Paso 2: resize (mantiene aspecto, sin ampliar fotos pequeñas)
     resized="$TMP_DIR/.resized-$$.jpg"
-    # sips no soporta "resize solo si mayor" nativamente; usamos --resampleWidth
-    # que redimensiona a ese ancho (o más pequeño si aspecto lo requiere).
-    # Para no ampliar fotos pequeñas comprobamos primero:
-    orig_w=$(sips -g pixelWidth "$input_for_sips" | awk '/pixelWidth/{print $2}')
-    if [ "${orig_w:-0}" -gt "$MAX_WIDTH" ]; then
-      sips --resampleWidth "$MAX_WIDTH" "$input_for_sips" --out "$resized" >/dev/null
+    # En este Mac, `sips -g pixelWidth` falla con algunas fotos válidas. `file`
+    # proporciona las dimensiones sin decodificar la imagen y evita ese fallo.
+    dimensions=$(file -b "$input_for_sips" | grep -Eo '[0-9]+ ?x ?[0-9]+' | tail -1 | tr -d ' ')
+    orig_w="${dimensions%x*}"
+    orig_h="${dimensions#*x}"
+    if ! [[ "$orig_w" =~ ^[0-9]+$ && "$orig_h" =~ ^[0-9]+$ ]]; then
+      echo "ERROR: no se pudieron leer las dimensiones de $cat/$base"
+      exit 1
+    fi
+    if [ "$orig_w" -gt "$MAX_WIDTH" ] || [ "$orig_h" -gt "$MAX_WIDTH" ]; then
+      sips -Z "$MAX_WIDTH" "$input_for_sips" --out "$resized" >/dev/null
     else
       cp "$input_for_sips" "$resized"
     fi
 
-    # Paso 3: convertir a WebP
-    cwebp -q "$WEBP_QUALITY" "$resized" -o "$webp_out" >/dev/null 2>&1
+    # Paso 3: convertir a WebP. Conservamos EXIF para que el navegador respete
+    # la orientación original de las fotos hechas con iPhone.
+    cwebp -q "$WEBP_QUALITY" -metadata exif "$resized" -o "$webp_out" >/dev/null 2>&1
 
     # Limpieza intermedios
     [ -n "$intermediate" ] && rm -f "$intermediate"
@@ -221,13 +233,14 @@ fi
 
 # Construir mensaje de commit
 CAT_SUMMARY=""
-declare -A CAT_COUNT
-for p in "${PROCESADAS[@]}"; do
-  c="${p%%/*}"
-  CAT_COUNT[$c]=$((${CAT_COUNT[$c]:-0}+1))
-done
-for c in "${!CAT_COUNT[@]}"; do
-  CAT_SUMMARY="$CAT_SUMMARY ${CAT_COUNT[$c]} $c,"
+for c in "${CATEGORIAS[@]}"; do
+  count=0
+  for p in "${PROCESADAS[@]}"; do
+    [ "${p%%/*}" = "$c" ] && count=$((count+1))
+  done
+  if [ "$count" -gt 0 ]; then
+    CAT_SUMMARY="$CAT_SUMMARY $count $c,"
+  fi
 done
 CAT_SUMMARY="${CAT_SUMMARY%,}"
 

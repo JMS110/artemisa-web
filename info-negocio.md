@@ -21,10 +21,14 @@ Calle Zoa, 55 (esquina C/ Antonio Machado)
 - Facebook: (pendiente)
 
 ## Fotos
-Carpeta iCloud compartida con Rebeca — pendiente de rellenar por categoría:
+Los originales se guardan en el NAS, en la carpeta compartida `Web-Artemisa`.
+Rebeca sube desde el iPhone mediante Tailscale y Archivos a una de estas categorías:
 - Ramos
 - Centros
 - Bodas
 - Plantas
 - Coronas
+- Flor seca
 - Eventos
+
+Las fotos publicadas se archivan automáticamente en `_procesadas/`. La antigua carpeta compartida de iCloud se mantiene temporalmente solo como respaldo durante la transición.
