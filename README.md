@@ -1,6 +1,6 @@
 # Artemisa Web
 
-Web comercial de [Floristería Artemisa](https://www.artemisafloristas.com), en Torrevieja.
+Web comercial de [Artemisa Floristas](https://artemisafloristas.com), floristería en Torrevieja desde 1991.
 
 ## Tecnología
 

@@ -9,6 +9,11 @@ const { lang } = Astro.props;
 const t = useTranslations(lang);
 
 const currentPath = Astro.url.pathname;
+const pathWithoutLocale = currentPath.replace(/^\/en(?=\/|$)/, '') || '/';
+const getLanguagePath = (code: string) => {
+  if (code === 'es') return pathWithoutLocale;
+  return pathWithoutLocale === '/' ? `/${code}/` : `/${code}${pathWithoutLocale}`;
+};
 ---
 
 <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b border-stone-100">
@@ -16,7 +21,7 @@ const currentPath = Astro.url.pathname;
 
     <a href={getLocalizedPath('/', lang)} class="flex items-center gap-2">
       <span class="text-2xl">🌸</span>
-      <span class="font-semibold text-lg text-[#2d5a3d] tracking-tight">Artemisa</span>
+      <span class="font-semibold text-lg text-[#2d5a3d] tracking-tight">Artemisa Floristas</span>
     </a>
 
     <div class="hidden md:flex items-center gap-8">
@@ -34,7 +39,7 @@ const currentPath = Astro.url.pathname;
     <div class="flex items-center gap-2">
       {Object.entries(languages).map(([code, label]) => (
         <a
-          href={code === 'es' ? currentPath.replace(/^\/(en|de|ru)/, '') : currentPath.replace(/^\/(en|de|ru|)/, `/${code}`)}
+          href={getLanguagePath(code)}
           class={`text-xs px-2 py-1 rounded transition-colors ${lang === code ? 'bg-[#2d5a3d] text-white' : 'text-stone-400 hover:text-[#2d5a3d]'}`}
         >
           {code.toUpperCase()}

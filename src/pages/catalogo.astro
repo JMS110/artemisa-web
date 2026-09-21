@@ -19,7 +19,10 @@ const categories = [
 ] as const;
 ---
 
-<Layout title={t('nav.catalog')}>
+<Layout
+  title="Catálogo floral · Artemisa Floristas Torrevieja"
+  description="Descubre ramos, centros, flores para bodas y eventos, composiciones fúnebres, plantas y flor seca de Artemisa Floristas en Torrevieja."
+>
 
   <section class="max-w-6xl mx-auto px-6 py-20">
     <h1 class="text-4xl font-light text-center text-[#1a1a1a] mb-2">{t('catalog.title')}</h1>
@@ -42,9 +45,14 @@ const categories = [
               {preview.length > 0
                 ? (
                   <>
-                    {preview.map((src) => (
+                    {preview.map((src, index) => (
                       <div class="aspect-square overflow-hidden rounded-xl bg-stone-100">
-                        <img src={src} alt="" class="w-full h-full object-cover" loading="lazy" />
+                        <img
+                          src={src}
+                          alt={`${t(`catalog.${key}`)} de Artemisa Floristas en Torrevieja — ejemplo ${index + 1}`}
+                          class="w-full h-full object-cover"
+                          loading="lazy"
+                        />
                       </div>
                     ))}
                     {hasMore && (

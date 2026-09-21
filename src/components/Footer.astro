@@ -15,36 +15,36 @@ const t = useTranslations(lang);
     <div>
       <div class="flex items-center gap-2 mb-4">
         <span class="text-2xl">🌸</span>
-        <span class="font-semibold text-lg">Floristería Artemisa</span>
+        <span class="font-semibold text-lg">Artemisa Floristas</span>
       </div>
       <p class="text-green-200 text-sm leading-relaxed">
         C/ Zoa, 55 (esq. Antonio Machado)<br />
-        03180 Torrevieja, Alicante
+        03182 Torrevieja, Alicante
       </p>
     </div>
 
     <div>
       <h3 class="font-semibold mb-3 text-green-100">{t('contact.hours')}</h3>
       <p class="text-green-200 text-sm leading-relaxed">
-        Lun – Vie: 10:00 – 13:30 / 17:00 – 20:00<br />
-        Sáb: 10:00 – 13:30<br />
-        Verano (tardes): hasta las 20:30<br />
-        Dom: Cerrado
+        {t('hours.weekdays')}<br />
+        {t('hours.saturday')}<br />
+        {t('hours.summer')}<br />
+        {t('hours.sunday')}
       </p>
     </div>
 
     <div>
       <h3 class="font-semibold mb-3 text-green-100">{t('contact.title')}</h3>
       <ul class="text-green-200 text-sm space-y-1">
-        <li>📞 965 711 243</li>
-        <li>📱 633 501 113</li>
+        <li>📞 <a href="tel:+34965711243" class="hover:text-white">965 711 243</a></li>
+        <li>📱 <a href="tel:+34633501113" class="hover:text-white">633 501 113</a></li>
         <li>📍 C/ Zoa, 55 – Torrevieja</li>
-        <li>🚚 Reparto a domicilio en Torrevieja y alrededores</li>
+        <li>🚚 {t('delivery').replace('🚚 ', '')}</li>
       </ul>
     </div>
 
   </div>
   <div class="border-t border-green-700 text-center py-4 text-green-400 text-xs">
-    © {new Date().getFullYear()} Floristería Artemisa — {t('footer.rights')}
+    © {new Date().getFullYear()} Artemisa Floristas — {t('footer.rights')}
   </div>
 </footer>

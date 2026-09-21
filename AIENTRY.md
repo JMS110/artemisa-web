@@ -1,6 +1,6 @@
 # Artemisa Web — proyecto de JuanMa
 
-Web comercial de **Floristería Artemisa** (Torrevieja), empresa de Rebeca (esposa de JuanMa).
+Web comercial de **Artemisa Floristas** (Torrevieja), empresa de Rebeca (esposa de JuanMa), activa desde 1991.
 
 ## Stack
 
@@ -8,6 +8,13 @@ Web comercial de **Floristería Artemisa** (Torrevieja), empresa de Rebeca (espo
 - Repo: `JMS110/artemisa-web` (GitHub)
 - Deploy: **Vercel Hobby** con auto-deploy en push a `main`
 - DNS DonDominio → Vercel
+
+## SEO local
+
+- Google Business Profile existente y gestionado por Rebeca; datos actualizados el 2026-09-21.
+- SEO técnico preparado localmente el 2026-09-21: metadatos por página, canonical/hreflang ES-EN, JSON-LD `Florist`, sitemap y robots.
+- La página de contacto usa llamadas telefónicas y enlace a Google Maps; no hay formulario ni WhatsApp.
+- Cambios pendientes de confirmación antes del push a `main` y del alta posterior en Google Search Console.
 
 ## Reglas críticas
 
@@ -44,6 +51,7 @@ npm run build                            # build a ./dist/
 - Trabajar siempre en **español**
 - Confirmar antes de push
 - No exponer teléfono personal de Rebeca en repo (usar el del negocio 633 501 113)
+- WhatsApp no se ofrece como canal de la tienda; no añadir llamadas a la acción de WhatsApp.
 - Al añadir features, actualizar CLAUDE.md
 
 ## Nota de portabilidad

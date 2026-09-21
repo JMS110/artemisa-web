@@ -19,7 +19,10 @@ const categories = [
 ] as const;
 ---
 
-<Layout title={t('nav.catalog')}>
+<Layout
+  title="Floral catalogue · Artemisa Floristas Torrevieja"
+  description="Discover bouquets, centrepieces, wedding and event flowers, funeral arrangements, plants and dried flowers from Artemisa Floristas in Torrevieja."
+>
 
   <section class="max-w-6xl mx-auto px-6 py-20">
     <h1 class="text-4xl font-light text-center text-[#1a1a1a] mb-2">{t('catalog.title')}</h1>
@@ -42,9 +45,14 @@ const categories = [
               {preview.length > 0
                 ? (
                   <>
-                    {preview.map((src) => (
+                    {preview.map((src, index) => (
                       <div class="aspect-square overflow-hidden rounded-xl bg-stone-100">
-                        <img src={src} alt="" class="w-full h-full object-cover" loading="lazy" />
+                        <img
+                          src={src}
+                          alt={`${t(`catalog.${key}`)} by Artemisa Floristas in Torrevieja — example ${index + 1}`}
+                          class="w-full h-full object-cover"
+                          loading="lazy"
+                        />
                       </div>
                     ))}
                     {hasMore && (

@@ -6,11 +6,69 @@ import { getLangFromUrl } from '../i18n/translations';
 
 interface Props {
   title: string;
-  description?: string;
+  description: string;
 }
 
-const { title, description = 'Floristería Artemisa — Arreglos florales artesanales en Torrevieja' } = Astro.props;
+const { title, description } = Astro.props;
 const lang = getLangFromUrl(Astro.url);
+const site = Astro.site ?? new URL('https://artemisafloristas.com');
+
+const sourcePath = Astro.url.pathname;
+const spanishPath = sourcePath.startsWith('/en/')
+  ? sourcePath.slice(3)
+  : sourcePath === '/en'
+    ? '/'
+    : sourcePath;
+const englishPath = spanishPath === '/' ? '/en/' : `/en${spanishPath}`;
+const canonicalPath = lang === 'es' ? spanishPath : englishPath;
+const canonicalUrl = new URL(canonicalPath, site);
+const spanishUrl = new URL(spanishPath, site);
+const englishUrl = new URL(englishPath, site);
+
+const businessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Florist',
+  '@id': new URL('/#business', site).href,
+  name: 'Artemisa Floristas',
+  alternateName: 'Floristería Artemisa',
+  description: 'Floristería en Torrevieja desde 1991, especializada en ramos, centros, bodas, eventos, plantas, flor seca y composiciones fúnebres.',
+  url: new URL('/', site).href,
+  telephone: ['+34965711243', '+34633501113'],
+  foundingDate: '1991',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Calle Zoa, 55',
+    addressLocality: 'Torrevieja',
+    addressRegion: 'Alicante',
+    postalCode: '03182',
+    addressCountry: 'ES',
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '10:00',
+      closes: '13:30',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '17:00',
+      closes: '20:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Saturday',
+      opens: '10:00',
+      closes: '13:30',
+    },
+  ],
+  areaServed: [
+    { '@type': 'City', name: 'Torrevieja' },
+    { '@type': 'Place', name: 'La Mata' },
+    { '@type': 'Place', name: 'Orihuela Costa' },
+  ],
+};
 ---
 
 <!doctype html>
@@ -19,8 +77,22 @@ const lang = getLangFromUrl(Astro.url);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="es-ES" href={spanishUrl} />
+    <link rel="alternate" hreflang="en" href={englishUrl} />
+    <link rel="alternate" hreflang="x-default" href={spanishUrl} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title} — Floristería Artemisa</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Artemisa Floristas" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_GB'} />
+    <meta property="og:locale:alternate" content={lang === 'es' ? 'en_GB' : 'es_ES'} />
+    <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(businessSchema)} />
   </head>
   <body class="bg-[#faf8f5] text-[#1a1a1a] font-sans">
     <Nav lang={lang} />
