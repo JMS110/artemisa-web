@@ -12,9 +12,9 @@ Web comercial de **Artemisa Floristas** (Torrevieja), empresa de Rebeca (esposa 
 ## SEO local
 
 - Google Business Profile existente y gestionado por Rebeca; datos actualizados el 2026-09-21.
-- SEO técnico preparado localmente el 2026-09-21: metadatos por página, canonical/hreflang ES-EN, JSON-LD `Florist`, sitemap y robots.
+- SEO técnico desplegado en producción el 2026-09-21 (commit `ac61168`): metadatos por página, canonical/hreflang ES-EN, JSON-LD `Florist`, sitemap y robots.
 - La página de contacto usa llamadas telefónicas y enlace a Google Maps; no hay formulario ni WhatsApp.
-- Cambios pendientes de confirmación antes del push a `main` y del alta posterior en Google Search Console.
+- Vercel y las rutas públicas verificados; siguiente paso: alta del dominio en Google Search Console y envío del sitemap.
 
 ## Reglas críticas
 
