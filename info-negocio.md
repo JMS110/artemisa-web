@@ -34,10 +34,9 @@ Los originales se guardan en el NAS, en la carpeta compartida `Web-Artemisa`.
 Rebeca sube desde el iPhone mediante Tailscale y Archivos a una de estas categorías:
 - Ramos
 - Centros
-- Bodas
 - Plantas
-- Coronas
-- Flor seca
+- Flor seca y preservada
 - Eventos
+- Composiciones fúnebres
 
 Las fotos publicadas se archivan automáticamente en `_procesadas/`. La antigua carpeta compartida de iCloud se mantiene temporalmente solo como respaldo durante la transición.

@@ -19,18 +19,22 @@ const categoryKey = categoria as CategoryKey;
 const images = catalogImages[categoryKey] as readonly string[];
 
 const emojiMap: Record<CategoryKey, string> = {
-  ramos: '💐', centros: '🌺', bodas: '🤍', plantas: '🪴', coronas: '🌿', florseca: '🌾', eventos: '✨',
+  ramos: '💐',
+  centros: '🌺',
+  plantas: '🪴',
+  'flor-seca-y-preservada': '🌾',
+  eventos: '✨',
+  'composiciones-funebres': '🌿',
 };
 const emoji = emojiMap[categoryKey];
 const categoryName = t(`catalog.${categoryKey}`);
 const metaDescriptions: Record<CategoryKey, string> = {
   ramos: 'Custom flower bouquets in Torrevieja, made by Artemisa Floristas with seasonal flowers.',
   centros: 'Custom floral centrepieces for gifts, decoration and celebrations, made by Artemisa Floristas in Torrevieja.',
-  bodas: 'Bridal bouquets and floral decoration for weddings in Torrevieja and Orihuela Costa.',
   plantas: 'Indoor and outdoor plants available from Artemisa Floristas in central Torrevieja.',
-  coronas: 'Funeral wreaths and arrangements prepared with respect and care in Torrevieja.',
-  florseca: 'Dried and preserved flower bouquets and centrepieces by Artemisa Floristas in Torrevieja.',
-  eventos: 'Floral decoration for events, communions and celebrations in Torrevieja and Orihuela Costa.',
+  'flor-seca-y-preservada': 'Dried and preserved flower bouquets and centrepieces by Artemisa Floristas in Torrevieja.',
+  eventos: 'Bridal bouquets and floral decoration for weddings, communions and celebrations in Torrevieja and Orihuela Costa.',
+  'composiciones-funebres': 'Funeral arrangements prepared with respect and care in Torrevieja.',
 };
 ---
 

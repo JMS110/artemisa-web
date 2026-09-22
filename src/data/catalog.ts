@@ -1,8 +1,8 @@
 // Auto-generado por scripts/publicar-artemisa.sh — no editar a mano.
-// Última generación: 2026-09-20 18:59:57
+// Última generación: 2026-09-22 21:46:21
 
 export const catalogImages = {
-  ramos: [
+  'ramos': [
     '/images/ramos/BC8E75B2-46D3-4320-8861-D748987B9ED8.webp',
     '/images/ramos/IMG_0841.webp',
     '/images/ramos/IMG_3738.webp',
@@ -14,7 +14,7 @@ export const catalogImages = {
     '/images/ramos/IMG_9432.webp',
     '/images/ramos/e0657dc0-9215-4bff-a7ed-9fc002e349b4.webp',
   ],
-  centros: [
+  'centros': [
     '/images/centros/00A3EF83-0CE2-4776-AB30-192961C6466A.webp',
     '/images/centros/5BC19434-D615-48C8-9563-45F9C6D86CB9.webp',
     '/images/centros/IMG_0794.webp',
@@ -24,17 +24,7 @@ export const catalogImages = {
     '/images/centros/IMG_7794.webp',
     '/images/centros/IMG_8113.webp',
   ],
-  bodas: [
-    '/images/bodas/IMG-20180502-WA0003.webp',
-    '/images/bodas/IMG_0001.webp',
-    '/images/bodas/IMG_0104.webp',
-    '/images/bodas/IMG_0138.webp',
-    '/images/bodas/IMG_0140.webp',
-    '/images/bodas/IMG_0144.webp',
-    '/images/bodas/IMG_1828.webp',
-    '/images/bodas/IMG_6758.webp',
-  ],
-  plantas: [
+  'plantas': [
     '/images/plantas/024376f4-45f3-429d-b718-8e938c168e2c.webp',
     '/images/plantas/08a7b894-81a5-44b6-a502-ce8f898afb4b.webp',
     '/images/plantas/16da6945-483e-4906-8b75-59e4ba318d45.webp',
@@ -46,35 +36,26 @@ export const catalogImages = {
     '/images/plantas/IMG_4090.webp',
     '/images/plantas/ecc9cdb6-0125-49c3-9946-949a2a84019b.webp',
   ],
-  coronas: [
-    '/images/coronas/IMG_0144.webp',
-    '/images/coronas/IMG_4067.webp',
-    '/images/coronas/IMG_4068.webp',
-    '/images/coronas/IMG_4069.webp',
-    '/images/coronas/IMG_6140.webp',
-    '/images/coronas/IMG_6169.webp',
-    '/images/coronas/IMG_8201.webp',
+  'flor-seca-y-preservada': [
+    '/images/flor-seca-y-preservada/208E27A3-7CED-4A24-B91D-1473BAE5AAE5.webp',
+    '/images/flor-seca-y-preservada/236C4CD7-6B4D-47DE-AF48-1E9B39FF5A59.webp',
+    '/images/flor-seca-y-preservada/311E1DC5-8307-444E-A800-65C9F9F81F9E.webp',
+    '/images/flor-seca-y-preservada/7F736795-4701-4757-8205-C5B57E51BAEF.webp',
+    '/images/flor-seca-y-preservada/9424367B-6268-4FDC-8D16-ED4208DBE953.webp',
+    '/images/flor-seca-y-preservada/B31CB35C-2A35-46CE-9586-A6B551185FAD.webp',
+    '/images/flor-seca-y-preservada/D977E3EF-6F6E-4F72-B936-5525C15B395F.webp',
+    '/images/flor-seca-y-preservada/IMG_0818.webp',
+    '/images/flor-seca-y-preservada/IMG_0819.webp',
+    '/images/flor-seca-y-preservada/IMG_1098.webp',
+    '/images/flor-seca-y-preservada/IMG_1111.webp',
+    '/images/flor-seca-y-preservada/IMG_1117.webp',
+    '/images/flor-seca-y-preservada/IMG_3066.webp',
+    '/images/flor-seca-y-preservada/IMG_4078.webp',
+    '/images/flor-seca-y-preservada/IMG_8237.webp',
+    '/images/flor-seca-y-preservada/IMG_9412.webp',
+    '/images/flor-seca-y-preservada/IMG_9901.webp',
   ],
-  florseca: [
-    '/images/flor-seca/208E27A3-7CED-4A24-B91D-1473BAE5AAE5.webp',
-    '/images/flor-seca/236C4CD7-6B4D-47DE-AF48-1E9B39FF5A59.webp',
-    '/images/flor-seca/311E1DC5-8307-444E-A800-65C9F9F81F9E.webp',
-    '/images/flor-seca/7F736795-4701-4757-8205-C5B57E51BAEF.webp',
-    '/images/flor-seca/9424367B-6268-4FDC-8D16-ED4208DBE953.webp',
-    '/images/flor-seca/B31CB35C-2A35-46CE-9586-A6B551185FAD.webp',
-    '/images/flor-seca/D977E3EF-6F6E-4F72-B936-5525C15B395F.webp',
-    '/images/flor-seca/IMG_0818.webp',
-    '/images/flor-seca/IMG_0819.webp',
-    '/images/flor-seca/IMG_1098.webp',
-    '/images/flor-seca/IMG_1111.webp',
-    '/images/flor-seca/IMG_1117.webp',
-    '/images/flor-seca/IMG_3066.webp',
-    '/images/flor-seca/IMG_4078.webp',
-    '/images/flor-seca/IMG_8237.webp',
-    '/images/flor-seca/IMG_9412.webp',
-    '/images/flor-seca/IMG_9901.webp',
-  ],
-  eventos: [
+  'eventos': [
     '/images/eventos/1CB0E303-A390-4B12-86F6-27268E5DCB6F.webp',
     '/images/eventos/1CC6A918-93ED-4A48-A4CE-3D46FB8A9F5D.webp',
     '/images/eventos/24C93A09-31AF-4032-9633-9CE75DC75384.webp',
@@ -85,5 +66,22 @@ export const catalogImages = {
     '/images/eventos/B9AAEA4C-7DC2-4294-96E5-E78427582B7D.webp',
     '/images/eventos/F080D13A-2482-4350-A964-9D8BF3BAACA4.webp',
     '/images/eventos/F7BE53E4-89F4-4571-A9E1-B1E3F079804B.webp',
+    '/images/eventos/IMG-20180502-WA0003.webp',
+    '/images/eventos/IMG_0001.webp',
+    '/images/eventos/IMG_0104.webp',
+    '/images/eventos/IMG_0138.webp',
+    '/images/eventos/IMG_0140.webp',
+    '/images/eventos/IMG_0144.webp',
+    '/images/eventos/IMG_1828.webp',
+    '/images/eventos/IMG_6758.webp',
+  ],
+  'composiciones-funebres': [
+    '/images/composiciones-funebres/IMG_0144.webp',
+    '/images/composiciones-funebres/IMG_4067.webp',
+    '/images/composiciones-funebres/IMG_4068.webp',
+    '/images/composiciones-funebres/IMG_4069.webp',
+    '/images/composiciones-funebres/IMG_6140.webp',
+    '/images/composiciones-funebres/IMG_6169.webp',
+    '/images/composiciones-funebres/IMG_8201.webp',
   ],
 };

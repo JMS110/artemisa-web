@@ -21,8 +21,11 @@ npm run build
 
 Los originales se suben al NAS en `/volume1/Web-Artemisa/<categoria>/`. El script descarga las fotos pendientes, genera WebP de hasta 1920 px, actualiza el catálogo y archiva los originales en `_procesadas/`.
 
+Categorías: `Ramos`, `Centros`, `Plantas`, `Flor seca y preservada`, `Eventos` y `Composiciones fúnebres`. Los trabajos de boda se incluyen en `Eventos`.
+
 ```sh
 ./scripts/publicar-artemisa.sh --dry-run  # comprobar pendientes
+./scripts/publicar-artemisa.sh --catalog-only # regenerar solo catalog.ts
 ./scripts/publicar-artemisa.sh --no-push  # preparar commit local
 ./scripts/publicar-artemisa.sh            # publicar en producción
 ```

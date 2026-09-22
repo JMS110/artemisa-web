@@ -19,18 +19,22 @@ const categoryKey = categoria as CategoryKey;
 const images = catalogImages[categoryKey] as readonly string[];
 
 const emojiMap: Record<CategoryKey, string> = {
-  ramos: '💐', centros: '🌺', bodas: '🤍', plantas: '🪴', coronas: '🌿', florseca: '🌾', eventos: '✨',
+  ramos: '💐',
+  centros: '🌺',
+  plantas: '🪴',
+  'flor-seca-y-preservada': '🌾',
+  eventos: '✨',
+  'composiciones-funebres': '🌿',
 };
 const emoji = emojiMap[categoryKey];
 const categoryName = t(`catalog.${categoryKey}`);
 const metaDescriptions: Record<CategoryKey, string> = {
   ramos: 'Ramos de flores personalizados en Torrevieja, elaborados por Artemisa Floristas con flores de temporada.',
   centros: 'Centros florales personalizados para regalar, decorar y celebrar, elaborados por Artemisa Floristas en Torrevieja.',
-  bodas: 'Ramos de novia y decoración floral para bodas en Torrevieja y Orihuela Costa.',
   plantas: 'Plantas de interior y exterior disponibles en Artemisa Floristas, en el centro de Torrevieja.',
-  coronas: 'Coronas y composiciones fúnebres preparadas con respeto y cuidado en Torrevieja.',
-  florseca: 'Ramos y centros de flor seca y preservada creados por Artemisa Floristas en Torrevieja.',
-  eventos: 'Decoración floral para eventos, comuniones y celebraciones en Torrevieja y Orihuela Costa.',
+  'flor-seca-y-preservada': 'Ramos y centros de flor seca y preservada creados por Artemisa Floristas en Torrevieja.',
+  eventos: 'Ramos de novia y decoración floral para bodas, comuniones y celebraciones en Torrevieja y Orihuela Costa.',
+  'composiciones-funebres': 'Composiciones fúnebres preparadas con respeto y cuidado en Torrevieja.',
 };
 ---
 

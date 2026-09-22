@@ -10,6 +10,7 @@
 #   ./scripts/publicar-artemisa.sh --dry-run       # solo muestra qué haría, sin cambios
 #   ./scripts/publicar-artemisa.sh --no-push       # commit local pero sin push
 #   ./scripts/publicar-artemisa.sh --no-move       # NO mueve originales a _procesadas/ en NAS
+#   ./scripts/publicar-artemisa.sh --catalog-only  # regenera solo el catálogo desde los WebP locales
 
 set -euo pipefail
 
@@ -22,7 +23,11 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 IMG_DIR="$REPO_DIR/public/images"
 CATALOG_TS="$REPO_DIR/src/data/catalog.ts"
-CATEGORIAS=(ramos centros bodas plantas coronas flor-seca eventos)
+# Las carpetas del NAS son nombres visibles para Rebeca; los slugs web son
+# nombres técnicos seguros para URLs y rutas locales. Ambas listas deben
+# conservar el mismo orden.
+CARPETAS_NAS=("Ramos" "Centros" "Plantas" "Flor seca y preservada" "Eventos" "Composiciones fúnebres")
+CATEGORIAS_WEB=("ramos" "centros" "plantas" "flor-seca-y-preservada" "eventos" "composiciones-funebres")
 MAX_WIDTH=1920
 WEBP_QUALITY=82
 
@@ -35,17 +40,45 @@ trap 'rm -rf "$TMP_DIR"' EXIT
 DRY_RUN=0
 DO_PUSH=1
 MOVE_PROCESADAS=1
+CATALOG_ONLY=0
 for arg in "$@"; do
   case "$arg" in
     --dry-run)  DRY_RUN=1; DO_PUSH=0; MOVE_PROCESADAS=0 ;;
     --no-push)  DO_PUSH=0 ;;
     --no-move)  MOVE_PROCESADAS=0 ;;
+    --catalog-only) CATALOG_ONLY=1; DO_PUSH=0; MOVE_PROCESADAS=0 ;;
     -h|--help)
       grep -E '^# ' "$0" | head -20 | sed 's/^# //'
       exit 0
       ;;
   esac
 done
+
+regenerar_catalogo() {
+  {
+    echo "// Auto-generado por scripts/publicar-artemisa.sh — no editar a mano."
+    echo "// Última generación: $(date '+%Y-%m-%d %H:%M:%S')"
+    echo ""
+    echo "export const catalogImages = {"
+    for cat in "${CATEGORIAS_WEB[@]}"; do
+      cat_web="$IMG_DIR/$cat"
+      [ -d "$cat_web" ] || continue
+
+      echo "  '$cat': ["
+      find "$cat_web" -maxdepth 1 -type f -name "*.webp" | sort | while read -r f; do
+        echo "    '/images/$cat/$(basename "$f")',"
+      done
+      echo "  ],"
+    done
+    echo "};"
+  } > "$CATALOG_TS"
+}
+
+if [ "$CATALOG_ONLY" -eq 1 ]; then
+  regenerar_catalogo
+  echo "✓ Catálogo regenerado desde public/images/."
+  exit 0
+fi
 
 # ============================================================================
 # PRECHECKS
@@ -60,11 +93,13 @@ ssh "$NAS_HOST" "command -v tar >/dev/null" || { echo "ERROR: falta tar en $NAS_
 # 1. DESCARGAR FOTOS PENDIENTES DEL NAS
 # ============================================================================
 echo "▶ Descargando fotos del NAS ($NAS_HOST:$NAS_SRC)..."
-for cat in "${CATEGORIAS[@]}"; do
+for i in "${!CATEGORIAS_WEB[@]}"; do
+  cat="${CATEGORIAS_WEB[$i]}"
+  carpeta_nas="${CARPETAS_NAS[$i]}"
   mkdir -p "$TMP_DIR/$cat"
   # UGREENOS bloquea rsync remoto sobre /volume1; tar por SSH respeta sus ACL.
   # Solo bajamos categorías (no _procesadas) y propagamos cualquier error real.
-  if ! LC_ALL=C ssh "$NAS_HOST" "test -d '$NAS_SRC/$cat' && LC_ALL=C tar -C '$NAS_SRC/$cat' -cf - ." \
+  if ! LC_ALL=C ssh "$NAS_HOST" "test -d '$NAS_SRC/$carpeta_nas' && LC_ALL=C tar -C '$NAS_SRC/$carpeta_nas' -cf - ." \
     | LC_ALL=C tar -C "$TMP_DIR/$cat" -xf -; then
     echo "ERROR: no se pudo descargar $cat desde el NAS"
     exit 1
@@ -77,7 +112,7 @@ done
 TOTAL=0
 declare -a PROCESADAS
 
-for cat in "${CATEGORIAS[@]}"; do
+for cat in "${CATEGORIAS_WEB[@]}"; do
   cat_tmp="$TMP_DIR/$cat"
   cat_web="$IMG_DIR/$cat"
   [ -d "$cat_tmp" ] || continue
@@ -169,7 +204,9 @@ echo "✓ $TOTAL fotos procesadas."
 # ============================================================================
 if [ "$MOVE_PROCESADAS" -eq 1 ]; then
   echo "▶ Moviendo originales a _procesadas/ en NAS..."
-  for cat in "${CATEGORIAS[@]}"; do
+  for i in "${!CATEGORIAS_WEB[@]}"; do
+    cat="${CATEGORIAS_WEB[$i]}"
+    carpeta_nas="${CARPETAS_NAS[$i]}"
     cat_tmp="$TMP_DIR/$cat"
     [ -d "$cat_tmp" ] || continue
 
@@ -185,9 +222,9 @@ if [ "$MOVE_PROCESADAS" -eq 1 ]; then
     done
 
     if [ "${#to_move[@]}" -gt 0 ]; then
-      ssh "$NAS_HOST" "mkdir -p '$NAS_SRC/_procesadas/$cat'"
+      ssh "$NAS_HOST" "mkdir -p '$NAS_SRC/_procesadas/$carpeta_nas'"
       for base in "${to_move[@]}"; do
-        ssh "$NAS_HOST" "mv '$NAS_SRC/$cat/$base' '$NAS_SRC/_procesadas/$cat/$base'" 2>/dev/null || true
+        ssh "$NAS_HOST" "mv '$NAS_SRC/$carpeta_nas/$base' '$NAS_SRC/_procesadas/$carpeta_nas/$base'" 2>/dev/null || true
       done
     fi
   done
@@ -198,27 +235,7 @@ fi
 # ============================================================================
 echo "▶ Regenerando src/data/catalog.ts..."
 
-{
-  echo "// Auto-generado por scripts/publicar-artemisa.sh — no editar a mano."
-  echo "// Última generación: $(date '+%Y-%m-%d %H:%M:%S')"
-  echo ""
-  echo "export const catalogImages = {"
-  for cat in "${CATEGORIAS[@]}"; do
-    cat_web="$IMG_DIR/$cat"
-    [ -d "$cat_web" ] || continue
-
-    # clave TypeScript: sin guiones (flor-seca → florseca)
-    key="$(echo "$cat" | tr -d '-')"
-
-    echo "  $key: ["
-    # ordenar alfabéticamente para orden determinista
-    find "$cat_web" -maxdepth 1 -type f -name "*.webp" | sort | while read -r f; do
-      echo "    '/images/$cat/$(basename "$f")',"
-    done
-    echo "  ],"
-  done
-  echo "};"
-} > "$CATALOG_TS"
+regenerar_catalogo
 
 # ============================================================================
 # 6. GIT COMMIT + PUSH
@@ -233,7 +250,7 @@ fi
 
 # Construir mensaje de commit
 CAT_SUMMARY=""
-for c in "${CATEGORIAS[@]}"; do
+for c in "${CATEGORIAS_WEB[@]}"; do
   count=0
   for p in "${PROCESADAS[@]}"; do
     [ "${p%%/*}" = "$c" ] && count=$((count+1))

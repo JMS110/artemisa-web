@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    { "source": "/catalogo/bodas", "destination": "/catalogo/eventos", "permanent": true },
+    { "source": "/catalogo/coronas", "destination": "/catalogo/composiciones-funebres", "permanent": true },
+    { "source": "/catalogo/florseca", "destination": "/catalogo/flor-seca-y-preservada", "permanent": true },
+    { "source": "/en/catalogo/bodas", "destination": "/en/catalogo/eventos", "permanent": true },
+    { "source": "/en/catalogo/coronas", "destination": "/en/catalogo/composiciones-funebres", "permanent": true },
+    { "source": "/en/catalogo/florseca", "destination": "/en/catalogo/flor-seca-y-preservada", "permanent": true }
+  ]
+}

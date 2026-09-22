@@ -26,7 +26,7 @@ Web comercial de **Artemisa Floristas** (Torrevieja), empresa de Rebeca (esposa 
 
 Fotos originales viven en el NAS (`/volume1/Web-Artemisa/<categoria>/`). Al ejecutar `./scripts/publicar-artemisa.sh` desde el Mac: descarga → optimiza WebP 1920px → copia al repo → commit + push → Vercel despliega.
 
-Categorías: `ramos, centros, bodas, plantas, coronas, flor-seca, eventos`.
+Categorías visibles/NAS: `Ramos`, `Centros`, `Plantas`, `Flor seca y preservada`, `Eventos` y `Composiciones fúnebres`. Las fotos de bodas forman parte de `Eventos`.
 
 Desde 2026-09-20, las 69 fotos históricas y la primera subida desde el iPhone están archivadas en `_procesadas/`; el repo contiene 70 WebP optimizados (unos 21 MB). UGREENOS bloquea `rsync` remoto sobre `/volume1`, por lo que el script transfiere mediante `tar` sobre SSH.
 
@@ -44,6 +44,7 @@ npm run dev                              # dev server localhost:4321
 npm run build                            # build a ./dist/
 ./scripts/publicar-artemisa.sh           # publicar fotos NAS → Vercel
 ./scripts/publicar-artemisa.sh --dry-run # simular sin cambios
+./scripts/publicar-artemisa.sh --catalog-only # regenerar solo catalog.ts desde los WebP locales
 ```
 
 ## Comportamiento esperado
